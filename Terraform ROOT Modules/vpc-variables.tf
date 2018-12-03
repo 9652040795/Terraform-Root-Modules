@@ -81,10 +81,20 @@ variable "vpc-cidr" {
   default = ""
 }
 
+#NUMBER OF PUBLIC SUBNETS REQUIRED
+variable "number-of-public-subnets-required" {
+  default = ""
+}
+
 #VPC PUBLIC SUBNETS CIDR BLOCK LIST
 variable "vpc-public-subnet-cidr" {
   type = "list"
   default = ["","","",""]
+}
+
+#NUBMER OF PRIVATE SUBNETS REQUIRED
+variable "number-of-private-subnets-required" {
+  default = ""
 }
 
 #VPC PRIVATE SUBNETS CIDR BLOCK LIST
@@ -92,12 +102,6 @@ variable "vpc-private-subnet-cidr" {
   type = "list"
   default = ["","",""]
 }
-
-#CREATE MULTIPLE AZS LIST
-#variable "azs" {
-#  type = "list"
-#  default = ["eu-west-2a","eu-west-2b","eu-west-2c"]
-#}
 
 #FETCH AZS FROM REGION
 data "aws_availability_zones" "azs" {}

@@ -21,7 +21,8 @@ module "cloudelligent-dev" {
   vpc-cidr = "192.168.0.0/16"
   vpc-public-subnet-cidr = ["192.168.1.0/24","192.168.2.0/24","192.168.3.0/24"]
   vpc-private-subnet-cidr = ["192.168.4.0/24","192.168.5.0/24","192.168.6.0/24"]
-
+  number-of-public-subnets-required = "2"
+  number-of-private-subnets-required = "3"
   ###VPN###
   aws-customer-gateway-static-public-ip = "119.153.143.246"
   customer_gateway-name = "office-name"

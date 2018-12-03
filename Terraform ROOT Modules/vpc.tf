@@ -26,8 +26,8 @@ resource "aws_internet_gateway" "igw" {
 #PUBLIC SUBNET FROM A LIST
 resource "aws_subnet" "public-subnets" {
   availability_zone = "${element(data.aws_availability_zones.azs.names,count.index)}"
-
-  count = "${length(data.aws_availability_zones.azs.names)}"
+  count = "${var.number-of-public-subnets-required}"
+  # count = "${length(data.aws_availability_zones.azs.names)}"
   cidr_block = "${element(var.vpc-public-subnet-cidr,count.index)}"
   vpc_id = "${aws_vpc.my-vpc.id}"
   map_public_ip_on_launch = "${var.map_public_ip_on_launch}"
@@ -61,8 +61,8 @@ resource "aws_route_table_association" "public-association" {
 #CREATING PRIVATE SUBNETS FROM A LIST
 resource "aws_subnet" "private-subnets" {
   availability_zone = "${element(data.aws_availability_zones.azs.names,count.index)}"
-
-  count = "${length(data.aws_availability_zones.azs.names)}"
+   count = "${var.number-of-private-subnets-required}"
+ # count = "${length(data.aws_availability_zones.azs.names)}"
   cidr_block = "${element(var.vpc-private-subnet-cidr,count.index)}"
   vpc_id = "${aws_vpc.my-vpc.id}"
 
