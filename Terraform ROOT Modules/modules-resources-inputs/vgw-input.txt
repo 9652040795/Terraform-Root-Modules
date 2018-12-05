@@ -1,0 +1,3 @@
+###VGW###
+  aws-vgw-name = "Cloudelligent-vgw"
+  ###END-VGW

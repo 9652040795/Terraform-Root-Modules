@@ -7,15 +7,8 @@ resource "aws_customer_gateway" "customer_gateway" {
   }
 }
 
-resource "aws_vpn_gateway" "vpn_gateway" {
-  vpc_id = "${aws_vpc.my-vpc.id}"
-  tags {
-    Name = "${var.aws-vgw-name}"
-  }
-}
-
 resource "aws_vpn_connection" "vpn-connection" {
-  vpn_gateway_id      = "${aws_vpn_gateway.vpn_gateway.id}"
+  vpn_gateway_id      = "${aws_vpn_gateway.vgw.id}"
   customer_gateway_id = "${aws_customer_gateway.customer_gateway.id}"
   type                = "ipsec.1"
   static_routes_only  = true
@@ -30,18 +23,6 @@ resource "aws_vpn_connection_route" "office" {
 
 }
 
-############Route Propagations for Public Subnets###########
-resource "aws_vpn_gateway_route_propagation" "vpn-public-subnets" {
 
-  vpn_gateway_id = "${aws_vpn_gateway.vpn_gateway.id}"
-  route_table_id = "${aws_route_table.public-routes.id}"
 
-}
 
-#######Route Propagations for Private Subnets############
-resource "aws_vpn_gateway_route_propagation" "vpn-private-subnets" {
-  count = "${length(data.aws_availability_zones.azs.names)}"
-  vpn_gateway_id = "${aws_vpn_gateway.vpn_gateway.id}"
-  route_table_id = "${element(aws_route_table.private-routes.*.id,count.index)}"
-
-}
