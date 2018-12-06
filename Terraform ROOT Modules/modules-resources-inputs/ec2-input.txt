@@ -1,0 +1,13 @@
+ ###EC2###
+  ec2-ami-id = ""
+  instance-type = "t2.micro"
+#  single-subnet-id = ""
+  number-of-ec2-instance-required = "3"
+#  public-key-name-already-attached-in-key-pair-section = ""
+  attaching-public-key = "power"
+  attaching-public-key-location = "${file("./templates/ec2/power.pub")}"
+  user-data-bash-script = "${file("./templates/ec2/httpd.sh")}"
+  ec2-instance-name = "Centos"
+  subnets-id = ["","",""]
+
+  ###END-EC2
