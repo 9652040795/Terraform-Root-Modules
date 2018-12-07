@@ -49,7 +49,12 @@ module "cloudelligent-dev" {
   attaching-public-key-location = "${file("./modules/templates/ec2/power.pub")}"
   user-data-bash-script = "${file("./modules/templates/ec2/httpd.sh")}"
   ec2-instance-name = "Centos"
-  subnets-id = ["subnet-0221a161324f04274","subnet-004abbaa1cc4ffc49","subnet-00f7200ef21e22e79"]
+   subnets-id = ["${module.cloudelligent-dev.public-subnet-ids}"]
+#   subnets-id = ["${module.cloudelligent-dev.private-subnet-ids}"]
+
+
+    #INCASE OF LAUNCHING IN SPECFIC SUBNETS
+#   subnets-id = ["","","","","",""]
   ###END-EC2
 
 

@@ -1,13 +1,17 @@
- ###EC2###
-  ec2-ami-id = ""
+###EC2###
+  ec2-ami-id = "ami-0274e11dced17bb5b"
   instance-type = "t2.micro"
 #  single-subnet-id = ""
   number-of-ec2-instance-required = "3"
 #  public-key-name-already-attached-in-key-pair-section = ""
   attaching-public-key = "power"
-  attaching-public-key-location = "${file("./templates/ec2/power.pub")}"
-  user-data-bash-script = "${file("./templates/ec2/httpd.sh")}"
+  attaching-public-key-location = "${file("./modules/templates/ec2/power.pub")}"
+  user-data-bash-script = "${file("./modules/templates/ec2/httpd.sh")}"
   ec2-instance-name = "Centos"
-  subnets-id = ["","",""]
+   subnets-id = ["${module.cloudelligent-dev.public-subnet-ids}"]
+#   subnets-id = ["${module.cloudelligent-dev.private-subnet-ids}"]
 
+
+    #INCASE OF LAUNCHING IN SPECFIC SUBNETS
+#   subnets-id = ["","","","","",""]
   ###END-EC2
