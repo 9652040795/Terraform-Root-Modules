@@ -14,7 +14,7 @@ module "cloudelligent-dev" {
   private-subnets-location-name = "London"
   total-nat-gateway-required = "3"
   eip-for-nat-gateway-name = "eip-nat-gateway"
-  nat-gateway-name = "nat-gateway-name"
+  nat-gateway-name = "Cloudelligent-nat-gateway"
   eip-required = "3"
   private-route-cidr = "0.0.0.0/0"
   private-route-name = "private-route"
