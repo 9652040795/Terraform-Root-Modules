@@ -6,7 +6,7 @@ module "cloudelligent-dev" {
   vpc-name = "Cloudelligent-vpc"
   vpc-location = "London"
   region = "eu-west-2"
-  internet-gateway-name = "Cloudelligent-VGW"
+  internet-gateway-name = "Cloudelligent-igw"
   map_public_ip_on_launch = "true"
   public-subnets-name = "public-subnets"
   public-subnets-location = "London"
@@ -21,8 +21,10 @@ module "cloudelligent-dev" {
   vpc-cidr = "192.168.0.0/16"
   vpc-public-subnet-cidr = ["192.168.1.0/24","192.168.2.0/24","192.168.3.0/24"]
   vpc-private-subnet-cidr = ["192.168.4.0/24","192.168.5.0/24","192.168.6.0/24"]
-  number-of-public-subnets-required = "2"
+  number-of-public-subnets-required = "3"
   number-of-private-subnets-required = "3"
+  create-before-destroy-vpc = "true"
+  prevent-destroy-vpc = "true"
 
   ###END-VPC
 
@@ -49,7 +51,11 @@ module "cloudelligent-dev" {
   attaching-public-key-location = "${file("./modules/templates/ec2/power.pub")}"
   user-data-bash-script = "${file("./modules/templates/ec2/httpd.sh")}"
   ec2-instance-name = "Centos"
+
+
+
    subnets-id = ["${module.cloudelligent-dev.public-subnet-ids}"]
+
 #   subnets-id = ["${module.cloudelligent-dev.private-subnet-ids}"]
 
 

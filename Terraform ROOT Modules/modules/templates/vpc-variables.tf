@@ -5,6 +5,7 @@ variable "instance-tenancy" {
 variable "enable-dns-support" {
   default = ""
 }
+
 ##############################
 #VPC TAGS
 #-----------

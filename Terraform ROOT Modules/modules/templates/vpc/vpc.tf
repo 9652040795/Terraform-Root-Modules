@@ -6,6 +6,11 @@ resource "aws_vpc" "my-vpc" {
   cidr_block = "${var.vpc-cidr}"
   instance_tenancy = "${var.instance-tenancy}"
   enable_dns_support = "${var.enable-dns-support}"
+
+  lifecycle {
+    create_before_destroy = "true"
+    prevent_destroy = "true"
+  }
   tags {
     Name= "${var.vpc-name}"
     Location= "${var.vpc-location}"
@@ -111,28 +116,4 @@ resource "aws_route_table_association" "private-routes-linking" {
   count = "${length(data.aws_availability_zones.azs.names)}"
   route_table_id = "${element(aws_route_table.private-routes.*.id,count.index)}"
   subnet_id = "${element(aws_subnet.private-subnets.*.id,count.index)}"
-}
-
-#VPN-VGW
-resource "aws_vpn_gateway" "vgw" {
-  vpc_id = "${aws_vpc.my-vpc.id}"
-  tags {
-    Name = "${var.aws-vgw-name}"
-  }
-}
-
-############VPN-Route Propagations for Public Subnets###########
-resource "aws_vpn_gateway_route_propagation" "vpn-public-subnets" {
-
-  vpn_gateway_id = "${aws_vpn_gateway.vgw.id}"
-  route_table_id = "${aws_route_table.public-routes.id}"
-
-}
-
-#######VPN-Route Propagations for Private Subnets############
-resource "aws_vpn_gateway_route_propagation" "vpn-private-subnets" {
-  count = "${length(data.aws_availability_zones.azs.names)}"
-  vpn_gateway_id = "${aws_vpn_gateway.vgw.id}"
-  route_table_id = "${element(aws_route_table.private-routes.*.id,count.index)}"
-
 }

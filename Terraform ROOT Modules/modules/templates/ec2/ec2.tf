@@ -6,12 +6,12 @@ resource "aws_key_pair" "key-pair-name" {
 
 
 
-#Creating an EC2 instance in Public Subnet must mention the "Subnet ID"#
+#Creating an EC2 instance, always mention the "Subnet ID"#
 resource "aws_instance" "cloudelligent-ec2-vpn" {
 
 
   ami = "${var.ec2-ami-id}"
-  instance_type = "${var.ec2-ami-id}"
+  instance_type = "${var.instance-type}"
 
 #  Single Subnet
    #subnet_id = "${var.single-subnet-id}"
@@ -31,6 +31,10 @@ resource "aws_instance" "cloudelligent-ec2-vpn" {
 # MULTIPLE SUBNETS IDS
   subnet_id = "${element(var.subnets-id,count.index)}"
   vpc_security_group_ids = ["${aws_security_group.ec2-sg.id}"]
+
+ lifecycle {
+   prevent_destroy = "${var.prevent-destroy-ec2-cloudelligent}"
+ }
   tags {
     Name= "${var.ec2-instance-name}-${count.index+1}"
   }

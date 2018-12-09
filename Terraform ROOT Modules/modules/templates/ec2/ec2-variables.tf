@@ -5,6 +5,10 @@ variable "ec2-ami-id" {
 variable "instance-type" {
   default = ""
 }
+
+variable "prevent-destroy-ec2-cloudelligent" {
+  default = ""
+}
 variable "single-subnet-id" {
   default = ""
 }
@@ -30,10 +34,10 @@ variable "ec2-instance-name" {
 
 
 
-#EC2 Subnet ID's for Subnets
+#EC2 Subnet ID's FOR LAUNCHING IN PUBLIC OR PRIVATE SUBNETS
 variable "subnets-id" {
   type = "list"
-  default = ["subnet-0e451eb94102f3adb","subnet-0e9beadcf79744246","subnet-092c5d7d16b52031a"]
+  default = ["","",""]
 }
 
 

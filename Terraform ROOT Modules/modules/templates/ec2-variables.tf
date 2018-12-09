@@ -5,6 +5,10 @@ variable "ec2-ami-id" {
 variable "instance-type" {
   default = ""
 }
+
+variable "prevent-destroy-ec2-cloudelligent" {
+  default = ""
+}
 variable "single-subnet-id" {
   default = ""
 }
