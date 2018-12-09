@@ -1,6 +1,6 @@
 #VPN-VGW
 resource "aws_vpn_gateway" "vgw" {
-  vpc_id = "${aws_vpc.my-vpc.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
 
   lifecycle {
     create_before_destroy = "true"

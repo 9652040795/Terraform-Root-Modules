@@ -1,6 +1,6 @@
 resource "aws_security_group" "ec2-sg" {
   name = "ec2-sg"
-  vpc_id = "${aws_vpc.my-vpc.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
 
   tags {
     Name = "${var.ec2-sg-name}"
