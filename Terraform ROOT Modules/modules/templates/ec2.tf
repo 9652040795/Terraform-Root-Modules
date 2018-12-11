@@ -32,9 +32,6 @@ resource "aws_instance" "cloudelligent-ec2-vpn" {
   subnet_id = "${element(var.subnets-id,count.index)}"
   vpc_security_group_ids = ["${aws_security_group.ec2-sg.id}"]
 
- lifecycle {
-   prevent_destroy = "${var.prevent-destroy-ec2-cloudelligent}"
- }
   tags {
     Name= "${var.ec2-instance-name}-${count.index+1}"
   }

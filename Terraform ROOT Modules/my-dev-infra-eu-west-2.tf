@@ -23,8 +23,6 @@ module "cloudelligent-dev" {
   vpc-private-subnet-cidr = ["192.168.4.0/24","192.168.5.0/24","192.168.6.0/24"]
   number-of-public-subnets-required = "3"
   number-of-private-subnets-required = "3"
-  create-before-destroy-vpc = "true"
-  prevent-destroy-vpc = "true"
 
   ###END-VPC
 
@@ -40,28 +38,6 @@ module "cloudelligent-dev" {
   office-cidr = "10.11.0.0/16"
 
   ###END-VPN
-
-  ###EC2###
-  ec2-ami-id = "ami-0274e11dced17bb5b"
-  instance-type = "t2.micro"
-#  single-subnet-id = ""
-  number-of-ec2-instance-required = "3"
-#  public-key-name-already-attached-in-key-pair-section = ""
-  attaching-public-key = "power"
-  attaching-public-key-location = "${file("./modules/templates/ec2/power.pub")}"
-  user-data-bash-script = "${file("./modules/templates/ec2/httpd.sh")}"
-  ec2-instance-name = "Centos"
-
-
-
-   subnets-id = ["${module.cloudelligent-dev.public-subnet-ids}"]
-
-#   subnets-id = ["${module.cloudelligent-dev.private-subnet-ids}"]
-
-
-    #INCASE OF LAUNCHING IN SPECFIC SUBNETS
-#   subnets-id = ["","","","","",""]
-  ###END-EC2
 
 
   ###EC2-SECURITY GROUP###
@@ -107,7 +83,44 @@ module "cloudelligent-dev" {
   outbound-rule-1-to-port = 0
   outbound-rule-1-cidr_blocks = "0.0.0.0/0"
 
-#NOTE: ONLY ALL PORTS WILL BE "" & CIDR BLOCK WILL IN COMMAS ""
+  #NOTE: ONLY ALL PORTS WILL BE "" & CIDR BLOCK WILL IN COMMAS ""
   ###END-EC2-SG
 
+  ###EC2-APP###
+  ec2-ami-id = "ami-0274e11dced17bb5b"
+  instance-type = "t2.micro"
+#  single-subnet-id = ""
+  number-of-ec2-instance-required = "3"
+#  public-key-name-already-attached-in-key-pair-section = ""
+  attaching-public-key = "power"
+  attaching-public-key-location = "${file("./modules/templates/ec2-app/power.pub")}"
+  user-data-bash-script = "${file("./modules/templates/ec2-app/httpd.sh")}"
+  ec2-instance-name = "Centos"
+
+
+
+   subnets-id = ["${module.cloudelligent-dev.public-subnet-ids}"]
+
+#   subnets-id = ["${module.cloudelligent-dev.private-subnet-ids}"]
+
+
+    #INCASE OF LAUNCHING IN SPECFIC SUBNETS
+#   subnets-id = ["","","","","",""]
+  ###END-EC2
+
+
+
+  ###LAUNCH CONFIGURATION###
+  launch-configuration-name = "launch-configuration-ec2-app"
+  launch-configuration-ami-id = "ami-0274e11dced17bb5b"
+  launch-configuration-security-groups = "${module.cloudelligent-dev.ec2-sg-security-group}"
+  launch-configuration-instance-type = "t2.micro"
+  launch-configuration-public-key-name = "power"
+  launch-configuration-root-block-device-volume-type = "gp2"
+  launch-configuration-root-block-volume-size = "30"
+
+  ###END-LAUNCH-CONFIGURATION
+
 }
+
+
